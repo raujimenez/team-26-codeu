@@ -55,18 +55,41 @@ public class Datastore {
    *     message. List is sorted by time descending.
    */
   public List<Message> getMessages(String user) {
-    List<Message> messages = new ArrayList<>();
-
     Query query =
         new Query("Message")
             .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
+    return readMessages(results);
+  }
+
+  /**
+   * Gets all the messages posted by all the users.
+   *
+   * @return a list of messages posted by all the users, or empty list if no one has
+   *         never posted a message. List is sorted by time descending.
+   */
+  public List<Message> getAllMessages() {
+    Query query = 
+      new Query("Message")
+        .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    return readMessages(results);
+  }
+
+  /**
+   * Reads the message of the entity and stores it in the Message List
+   */
+  private List<Message> readMessages(PreparedQuery results) {
+    List<Message> messages = new ArrayList<>();
+
     for (Entity entity : results.asIterable()) {
       try {
         String idString = entity.getKey().getName();
         UUID id = UUID.fromString(idString);
+        String user = (String) entity.getProperty("user");
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
 
