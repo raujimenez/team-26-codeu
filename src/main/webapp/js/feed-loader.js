@@ -16,6 +16,8 @@ function fetchMessages() {
             messageContainer.appendChild(messageDiv);
         });
     });
+
+    addLoginOrLogoutLinkToNavigation();
 }
 
 // Builds an element that displays the message.
