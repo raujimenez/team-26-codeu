@@ -95,4 +95,5 @@ function buildUI() {
   setPageTitle();
   showMessageFormIfViewingSelf();
   fetchMessages();
+  addLoginOrLogoutLinkToNavigation();
 }
