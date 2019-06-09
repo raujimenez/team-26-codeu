@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.kefirsf.bb.TextProcessor;
+import org.kefirsf.bb.BBProcessorFactory;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -75,9 +77,14 @@ public class MessageServlet extends HttpServlet {
       return;
     }
 
+    TextProcessor processor = BBProcessorFactory.getInstance().create();
     String user = userService.getCurrentUser().getEmail();
-    String userEnteredContent = request.getParameter("text");
-    Whitelist whitelist = Whitelist.basic();
+    String userEnteredContent = processor.process(request.getParameter("text"));
+    
+    Whitelist whitelist = Whitelist.relaxed();
+    whitelist.addTags("span");
+    whitelist.addAttributes("span", "style");
+    whitelist.addTags("s");
     String userText = Jsoup.clean(userEnteredContent, whitelist);
 
     String regex = "(https?://\\S+\\.(png|jpg))";
