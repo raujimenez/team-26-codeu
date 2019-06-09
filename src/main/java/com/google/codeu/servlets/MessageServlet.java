@@ -85,9 +85,13 @@ public class MessageServlet extends HttpServlet {
     whitelist.addTags("span");
     whitelist.addAttributes("span", "style");
     whitelist.addTags("s");
-    String text = Jsoup.clean(userEnteredContent, whitelist);
+    String userText = Jsoup.clean(userEnteredContent, whitelist);
 
-    Message message = new Message(user, text);
+    String regex = "(https?://\\S+\\.(png|jpg))";
+    String replacement = "<img src=\"$1\" />";
+    String textWithImagesReplaced = userText.replaceAll(regex, replacement);
+
+    Message message = new Message(user, textWithImagesReplaced);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + user);
