@@ -2,12 +2,21 @@
 <html>
 <head>
     <title>Hello Google Maps</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuKSxxOHI1o-tBCm-wS1sqDyneVxbKAlM"></script>
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/navigation-loader.js"></script>
-</head>
+    <script src="/js/map-loader.js"> </script>
+    <style>
+        #map {
+            width: 500px;
+            height: 500px;
+            border: thin solid black;
+        }
+    </style>
 </head>
 
-<body onload="addLoginOrLogoutLinkToNavigation(); buildUI();">
+<body onload="createMap();addLoginOrLogoutLinkToNavigation(); buildUI();">
+
 <nav>
     <ul id="navigation">
         <li><a href="/">Home</a></li>
@@ -20,6 +29,8 @@
 </nav>
 
 <h1>Hello Google Maps</h1>
+<div id="map"></div>
 <p>This page shows a Google Map!</p>
+
 </body>
 </html>
