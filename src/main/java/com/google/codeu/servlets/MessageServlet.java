@@ -87,9 +87,9 @@ public class MessageServlet extends HttpServlet {
     whitelist.addTags("s");
     String userText = Jsoup.clean(userEnteredContent, whitelist);
 
-    String regex = "(https?://\\S+\\.(png|jpg|gif))";
+    String regex = "(https?://\\S+\\.{1}(png|jpg|gif))";
     String replacement = "<img src=\"$1\" />";
-
+    
     String textWithImagesReplaced = userText.replaceAll(regex, replacement);
 
     Message message = new Message(user, textWithImagesReplaced);
