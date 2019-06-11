@@ -90,10 +90,18 @@ function buildMessageDiv(message) {
   return messageDiv;
 }
 
+/**
+ * Builds the rich text editor using CKEditor 5
+ */
+function buildTextBox() {
+  ClassicEditor.create( document.getElementById('message-input') );
+}
+
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
   showMessageFormIfViewingSelf();
+  buildTextBox();
   fetchMessages();
   addLoginOrLogoutLinkToNavigation();
 }
