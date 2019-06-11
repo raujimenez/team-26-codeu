@@ -29,8 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-import org.kefirsf.bb.TextProcessor;
-import org.kefirsf.bb.BBProcessorFactory;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
