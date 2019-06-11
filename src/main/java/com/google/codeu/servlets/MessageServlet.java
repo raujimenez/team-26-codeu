@@ -77,9 +77,8 @@ public class MessageServlet extends HttpServlet {
       return;
     }
 
-    TextProcessor processor = BBProcessorFactory.getInstance().create();
     String user = userService.getCurrentUser().getEmail();
-    String userEnteredContent = processor.process(request.getParameter("text"));
+    String userEnteredContent = request.getParameter("text");
     
     Whitelist whitelist = Whitelist.relaxed();
     whitelist.addTags("span");
