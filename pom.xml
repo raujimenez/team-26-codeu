@@ -61,11 +61,6 @@ limitations under the License.
       <version>1.52.0</version>
     </dependency>
 
-    <dependency>
-        <groupId>org.kefirsf</groupId>
-        <artifactId>kefirbb</artifactId>
-        <version>1.5</version>
-    </dependency>
   </dependencies>
 
   <build>
