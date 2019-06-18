@@ -23,6 +23,8 @@ import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -76,15 +78,18 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String userEnteredContent = request.getParameter("text");
-    
+    String test = request.getParameter("text");
+   // String imageUrl = getUploadedFileUrl(request, "image");
+    String userEnteredContent =  test;
+   // String userEnteredContent =  test + " " + imageUrl;
+
     Whitelist whitelist = Whitelist.relaxed();
     whitelist.addTags("span");
     whitelist.addAttributes("span", "style");
     whitelist.addTags("s");
     String userText = Jsoup.clean(userEnteredContent, whitelist);
 
-    String regex = "(https?://\\S+\\.{1}(png|jpg|gif))";
+    String regex = "(https?://\\S+\\.(png|jpg|gif))";
     String replacement = "<img src=\"$1\" />";
     
     String textWithImagesReplaced = userText.replaceAll(regex, replacement);
@@ -94,4 +99,5 @@ public class MessageServlet extends HttpServlet {
 
     response.sendRedirect("/user-page.html?user=" + user);
   }
+
 }
