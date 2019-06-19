@@ -78,10 +78,7 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String test = request.getParameter("text");
-   // String imageUrl = getUploadedFileUrl(request, "image");
-    String userEnteredContent =  test;
-   // String userEnteredContent =  test + " " + imageUrl;
+    String userEnteredContent = request.getParameter("text");
 
     Whitelist whitelist = Whitelist.relaxed();
     whitelist.addTags("span");
