@@ -17,8 +17,12 @@
 /* Prevent the page from becoming too wide. */
 body {
   margin: 0;
-  background: linear-gradient(white, #ccccff) fixed;
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -36,7 +40,7 @@ nav li {
 
 nav {
   background-color: #ccccff;
-  font-size: 18pt;
+  font-size: 14pt;
   padding: 10px;
 }
 
@@ -49,11 +53,8 @@ h2 {
   margin: 0;
 }
 
-input[type=submit] {
-  background-color: #ccccff;
-  height: 50px;
-  width: 100px;
-  font-size: 14pt;
+.btn-space {
+  margin-right: 5px;
 }
 
 #content {
@@ -66,15 +67,6 @@ input[type=submit] {
 #message-input {
   height: 100px;
   width: 99%;
-}
-
-.message-header {
-  border-bottom: thin solid black;
-  background-image: linear-gradient(to right, white , #ccccff);
-}
-
-.message-body {
-  font: 12pt cursive;
 }
 
 .panel {
@@ -91,7 +83,6 @@ input[type=submit] {
 }
 
 .rounded {
-  border: thin solid black;
   border-radius: 5px;
   overflow: hidden;
 }
