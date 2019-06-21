@@ -9,6 +9,10 @@ import com.google.appengine.api.datastore.Query;
 import com.google.gson.Gson;
 import com.google.codeu.data.Marker;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gson.JsonObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,7 @@ public class MarkerDataServlet extends HttpServlet {
 
   /** Stores a marker in Datastore. */
   public void storeMarker(Marker marker) {
+
     Entity markerEntity = new Entity("Marker");
     markerEntity.setProperty("lat", marker.getLat());
     markerEntity.setProperty("lng", marker.getLng());
@@ -56,5 +61,19 @@ public class MarkerDataServlet extends HttpServlet {
     }
     return markers;
   }
+
+  /** Responds with a JSON array containing marker data. */
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("application/json");
+
+    List<Marker> markers = getMarkers();
+    Gson gson = new Gson();
+    String json = gson.toJson(markers);
+
+    response.getOutputStream().println(json);
+  }
+
+
 
 }
