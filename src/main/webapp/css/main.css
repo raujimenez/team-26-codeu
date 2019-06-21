@@ -16,7 +16,9 @@
 
 /* Prevent the page from becoming too wide. */
 body {
-  max-width: 600px;
+  margin: 0;
+  background: linear-gradient(white, #ccccff) fixed;
+  font-family: sans-serif;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -29,4 +31,71 @@ nav ul {
 nav li {
   display: inline-block;
   margin-right: 10px
+}
+
+
+nav {
+  background-color: #ccccff;
+  font-size: 18pt;
+  padding: 10px;
+}
+
+nav a {
+  color: black;
+  margin-right: 10px;
+}
+
+h2 {
+  margin: 0;
+}
+
+input[type=submit] {
+  background-color: #ccccff;
+  height: 50px;
+  width: 100px;
+  font-size: 14pt;
+}
+
+#content {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+#message-input {
+  height: 100px;
+  width: 99%;
+}
+
+.message-header {
+  border-bottom: thin solid black;
+  background-image: linear-gradient(to right, white , #ccccff);
+}
+
+.message-body {
+  font: 12pt cursive;
+}
+
+.panel {
+  background-color: white;
+  margin-top: 20px;
+}
+
+.centered{
+  text-align: center;
+}
+
+.padded {
+  padding: 10px;
+}
+
+.rounded {
+  border: thin solid black;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none;
 }

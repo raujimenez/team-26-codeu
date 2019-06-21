@@ -75,15 +75,20 @@ function fetchMessages() {
 function buildMessageDiv(message) {
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
+  headerDiv.classList.add('padded');
+
   headerDiv.appendChild(document.createTextNode(
       message.user + ' - ' + new Date(message.timestamp)));
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
+  bodyDiv.classList.add('padded');
   bodyDiv.innerHTML = message.text;
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
+  messageDiv.classList.add('rounded');
+  messageDiv.classList.add('panel');
   messageDiv.appendChild(headerDiv);
   messageDiv.appendChild(bodyDiv);
 
