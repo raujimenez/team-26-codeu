@@ -32,15 +32,23 @@ function buildMessageDiv(message) {
 
     const headerDiv = document.createElement('div');
     headerDiv.classList.add('message-header');
+    headerDiv.classList.add('padded');
+    headerDiv.classList.add('border-bottom');
     headerDiv.appendChild(usernameDiv);
     headerDiv.appendChild(timeDiv);
 
     const bodyDiv = document.createElement('div');
     bodyDiv.classList.add('message-body');
+    bodyDiv.classList.add('padded');
+    bodyDiv.classList.add('border-left');
+    bodyDiv.classList.add('border-bottom');
+    bodyDiv.classList.add('border-right');
     bodyDiv.innerHTML = message.text; 
     
     const messageDiv = document.createElement('div');
     messageDiv.classList.add("message-div");
+    messageDiv.classList.add('rounded');
+    messageDiv.classList.add('panel');
     messageDiv.appendChild(headerDiv);
     messageDiv.appendChild(bodyDiv);
 
