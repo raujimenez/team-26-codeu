@@ -91,6 +91,3 @@ public class MarkerDataServlet extends HttpServlet {
     }
 
   }
-
-
-}
