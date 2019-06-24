@@ -19,6 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
+import java.io.PrintWriter;
+
 
 /**
  * Handles fetching and saving markers data.
@@ -30,13 +35,14 @@ public class MarkerDataServlet extends HttpServlet {
   /** Stores a marker in Datastore. */
   public void storeMarker(Marker marker) {
 
-    Entity markerEntity = new Entity("Marker");
-    markerEntity.setProperty("lat", marker.getLat());
-    markerEntity.setProperty("lng", marker.getLng());
-    markerEntity.setProperty("content", marker.getContent());
+      Entity markerEntity = new Entity("Marker");
+      markerEntity.setProperty("lat", marker.getLat());
+      markerEntity.setProperty("lng", marker.getLng());
+      markerEntity.setProperty("content", marker.getContent());
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(markerEntity);
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      datastore.put(markerEntity);
+
   }
 
   /** Fetches markers from Datastore. */
@@ -68,6 +74,22 @@ public class MarkerDataServlet extends HttpServlet {
     String json = gson.toJson(markers);
 
     response.getOutputStream().println(json);
+  }
+
+  /** Accepts a POST request containing a new marker. */
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) {
+    double lat = Double.parseDouble(request.getParameter("lat"));
+    double lng = Double.parseDouble(request.getParameter("lng"));
+    String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
+
+    UserService userService = UserServiceFactory.getUserService();
+      if (userService.isUserLoggedIn()) {
+        Marker marker = new Marker(lat, lng, content);
+        storeMarker(marker);
+      }
+    }
+
   }
 
 
