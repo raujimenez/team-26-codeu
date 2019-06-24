@@ -15,43 +15,64 @@ limitations under the License.
 -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>User Page</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
     <script src="/js/user-page-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <!--Bootstrap libraries-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </head>
   <body onload="buildUI();">
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <li><a href="/feed.html">Public Feed</a></li>
-        <li><a href="/community.html">Community Page</a></li>
-        <li><a href="/stats.html">Statistics</a></li>
-          <li><a href="/map.html">Google Map</a></li>
-      </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul id="navigation" class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
+          <li class="nav-item"><a class="nav-link" href="/feed.html">Public Feed</a></li>
+          <li class="nav-item"><a class="nav-link" href="/community.html">Community Page</a></li>
+          <li class="nav-item"><a class="nav-link" href="/stats.html">Statistics</a></li>
+          <li class="nav-item"><a class="nav-link" href="/map.html">Google Map</a></li>
+        </ul>
+      </div>
     </nav>
-    <h1 id="page-title">User Page</h1>
-
+    <div class="container">
+    <div class="row">
+      <h1 id="page-title" class="col text-center">User Page</h1>
+    </div>
     <form id="message-form" action="/messages" method="POST" class="hidden" enctype="multipart/form-data">
-      Enter a new message:
       <br/>
       <textarea name="text" id="message-input"></textarea>
       <br/>
-      <p>Upload an image:</p>
-      <input type="file" name="image">
-      <br />
-      <!--<input type="submit" value="Submit">-->
-      <button>Submit</button>
+
+      <div class="row">
+        <div class="col">
+          <label class="btn btn-secondary btn-block btn-space float-right">
+            Upload Image <input type="file" style="display: none;" name="image">
+          </label>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary btn-block btn-space">Post</button>
+        </div>
+      </div>
     </form>
     <hr/>
 
     <div id="message-container">Loading...</div>
-
+    </div>
   </body>
 </html>

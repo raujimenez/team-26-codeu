@@ -23,21 +23,26 @@
 
 /* Give each message a rounded border. */
 .message-div {
-  border: thin solid black;
   border-radius: 5px;
   margin-top: 20px;
 }
 
 /* Add a bottom border to the message header. */
 .message-header {
-  border-bottom: thin solid black;
   padding: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color:#2e87e6; 
+  color:white;  
+  font-size:12px;
 }
 
 /* Give the message body a margin so the text
    isn't too close to the border. */
 .message-body {
-  margin: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font: 12pt;
 }
 
 /* Use this to hide certain elements like forms if the
@@ -50,4 +55,27 @@
   display: block;
   margin-top: 25px;
   max-width: 75%;
+}
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+#page-title {
+  margin-top: 5px;  
 }

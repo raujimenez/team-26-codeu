@@ -15,42 +15,78 @@ limitations under the License.
 -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>About Us</title>
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/navigation-loader.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <!--Bootstrap libraries-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </head>
   <body onload="addLoginOrLogoutLinkToNavigation();">
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <li><a href="/feed.html">Public Feed</a></li>
-        <li><a href="/community.html">Community Page</a></li>
-        <li><a href="/stats.html">Statistics</a></li>
-        <li><a href="/map.html">Google Map</a></li>
-      </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul id="navigation" class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item active"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
+          <li class="nav-item"><a class="nav-link" href="/feed.html">Public Feed</a></li>
+          <li class="nav-item"><a class="nav-link" href="/community.html">Community Page</a></li>
+          <li class="nav-item"><a class="nav-link" href="/stats.html">Statistics</a></li>
+          <li class="nav-item"><a class="nav-link" href="/map.html">Google Map</a></li>
+        </ul>
+      </div>
     </nav>
-    <h1>About Our Team</h1>
-    <h2>Raul Jimenez</h2>
-    <ul>
-      <li>Summer Feelz: Relaxed, excited, confident</li>
-      <li>Aspirational Hobby: Writing</li>
-      <li>Ask me About: Yu-Gi-Oh! (TV show or card game)</li>
-    </ul>
-    <h2>Benjamín Valdez</h2>
-    <ul>
-      <li>Summer Feelz: optimistic, cheerful, calm</li>
-      <li>Aspirational Hobby: Traveling around the world</li>
-      <li>Ask me About: Soccer</li>
-    </ul>
-    <h2>Scarlett Luo</h2>
-    <ul>
-      <li>Summer Feelz: food, friends, family </li>
-      <li>Aspirational Hobby: Working out </li>
-      <li>Ask me About: Panda and Spicy food</li>
-    </ul>
+    <div class="container" style="margin-top:5px">
+      <h1 class="text-center">About Our Team</h1>
+      <hr>
+      <div class="row">
+        <div class="col float-right">
+          <h2>Raul Jimenez</h2>
+        </div>
+        <div class="col float-left">
+          <ul>
+            <li>Summer Feelz: Relaxed, excited, confident</li>
+            <li>Aspirational Hobby: Writing</li>
+            <li>Ask me About: Yu-Gi-Oh! (TV show or card game)</li>
+          </ul>
+        </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col float-right">
+            <h2>Benjamín Valdez</h2>
+          </div>
+        <div class="col float-left">
+          <ul>
+            <li>Summer Feelz: optimistic, cheerful, calm</li>
+            <li>Aspirational Hobby: Traveling around the world</li>
+            <li>Ask me About: Soccer</li>
+          </ul>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col float-right">
+          <h2>Scarlett Luo</h2>
+        </div>
+        <div class="col float-left">
+          <ul>
+            <li>Summer Feelz: food, friends, family </li>
+            <li>Aspirational Hobby: Working out </li>
+            <li>Ask me About: Panda and Spicy food</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
