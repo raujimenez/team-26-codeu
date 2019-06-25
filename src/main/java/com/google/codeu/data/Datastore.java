@@ -79,6 +79,22 @@ public class Datastore {
   }
 
   /**
+   * Gets listing posted by a specific user.
+   *
+   * @return a list of listing posted by the user, or empty list if user has never posted a
+   *     listing. List is sorted by time descending.
+   */
+  public List<Listing> getListings(String user) {
+    Query query =
+        new Query("Listing")
+            .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+            .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    return readListings(results);
+  }
+
+  /**
    * Gets all the messages posted by all the users.
    *
    * @return a list of messages posted by all the users, or empty list if no one has
@@ -117,6 +133,33 @@ public class Datastore {
     }
 
     return messages;
+  }
+
+  /**
+   * Reads the Listing of the entity and stores it in the Listings List
+   */
+  private List<Listing> readListings(PreparedQuery results) {
+    List<Listing> listings = new ArrayList<>();
+
+    for (Entity entity : results.asIterable()) {
+      try {
+        String idString = entity.getKey().getName();
+        UUID id = UUID.fromString(idString);
+        String user = (String) entity.getProperty("user");
+        String title = (String) entity.getProperty("title");
+        String text = (String) entity.getProperty("text");
+        long timestamp = (long) entity.getProperty("timestamp");
+
+        Listing listing = new Listing(id, user, title, text, timestamp);
+        listings.add(listing);
+      } catch (Exception e) {
+        System.err.println("Error reading listing.");
+        System.err.println(entity.toString());
+        e.printStackTrace();
+      }
+    }
+
+    return listings;
   }
 
   /** Returns the total number of messages for all users. */
