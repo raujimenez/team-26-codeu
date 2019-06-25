@@ -50,6 +50,18 @@ public class Datastore {
     datastore.put(messageEntity);
   }
 
+
+  /* Stores new listing in Datastore*/
+  public void storeListing(Listing listing) {
+    Entity listingEntity = new Entity("Listing", listing.getId().toString());
+    listingEntity.setProperty("user", listing.getUser());
+    listingEntity.setProperty("title", listing.getTitle());
+    listingEntity.setProperty("text", listing.getText());
+    listingEntity.setProperty("timestamp", listing.getTimestamp());
+
+    datastore.put(listingEntity);
+  }
+
   /**
    * Gets messages posted by a specific user.
    *
@@ -67,6 +79,22 @@ public class Datastore {
   }
 
   /**
+   * Gets listing posted by a specific user.
+   *
+   * @return a list of listing posted by the user, or empty list if user has never posted a
+   *     listing. List is sorted by time descending.
+   */
+  public List<Listing> getListings(String user) {
+    Query query =
+        new Query("Listing")
+            .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+            .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    return readListings(results);
+  }
+
+  /**
    * Gets all the messages posted by all the users.
    *
    * @return a list of messages posted by all the users, or empty list if no one has
@@ -80,7 +108,22 @@ public class Datastore {
 
     return readMessages(results);
   }
+  
+  /**
+   * Gets all the listings posted by all the users.
+   *
+   * @return a list of Listings posted by all the users, or empty list if no one has
+   *         never posted a listing. List is sorted by time descending.
+   */
+  public List<Listing> getAllListings() {
+    Query query = 
+      new Query("Listing")
+        .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
 
+    return readListings(results);
+  }
+  
   /**
    * Reads the message of the entity and stores it in the Message List
    */
@@ -107,6 +150,33 @@ public class Datastore {
     return messages;
   }
 
+  /**
+   * Reads the Listing of the entity and stores it in the Listings List
+   */
+  private List<Listing> readListings(PreparedQuery results) {
+    List<Listing> listings = new ArrayList<>();
+
+    for (Entity entity : results.asIterable()) {
+      try {
+        String idString = entity.getKey().getName();
+        UUID id = UUID.fromString(idString);
+        String user = (String) entity.getProperty("user");
+        String title = (String) entity.getProperty("title");
+        String text = (String) entity.getProperty("text");
+        long timestamp = (long) entity.getProperty("timestamp");
+
+        Listing listing = new Listing(id, user, title, text, timestamp);
+        listings.add(listing);
+      } catch (Exception e) {
+        System.err.println("Error reading listing.");
+        System.err.println(entity.toString());
+        e.printStackTrace();
+      }
+    }
+
+    return listings;
+  }
+
   /** Returns the total number of messages for all users. */
   public int getTotalMessageCount(){
     Query query = new Query("Message");
@@ -114,6 +184,13 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
+  /** Returns the total number of listings for all users. */
+  public int getTotalListingCount(){
+    Query query = new Query("Listing");
+    PreparedQuery results = datastore.prepare(query);
+    return results.countEntities(FetchOptions.Builder.withLimit(1000));
+  }
+  
   /** Get the list of all users.
    * @return a set that adds all users.
    * */
