@@ -108,7 +108,22 @@ public class Datastore {
 
     return readMessages(results);
   }
+  
+  /**
+   * Gets all the listings posted by all the users.
+   *
+   * @return a list of Listings posted by all the users, or empty list if no one has
+   *         never posted a listing. List is sorted by time descending.
+   */
+  public List<Listing> getAllListings() {
+    Query query = 
+      new Query("Listing")
+        .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
 
+    return readListings(results);
+  }
+  
   /**
    * Reads the message of the entity and stores it in the Message List
    */
@@ -169,6 +184,13 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
+  /** Returns the total number of listings for all users. */
+  public int getTotalListingCount(){
+    Query query = new Query("Listing");
+    PreparedQuery results = datastore.prepare(query);
+    return results.countEntities(FetchOptions.Builder.withLimit(1000));
+  }
+  
   /** Get the list of all users.
    * @return a set that adds all users.
    * */
