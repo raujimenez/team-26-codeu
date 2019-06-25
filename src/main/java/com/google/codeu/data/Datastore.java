@@ -50,6 +50,18 @@ public class Datastore {
     datastore.put(messageEntity);
   }
 
+
+  /* Stores new listing in Datastore*/
+  public void storeListing(Listing listing) {
+    Entity listingEntity = new Entity("Listing", listing.getId().toString());
+    listingEntity.setProperty("user", listing.getUser());
+    listingEntity.setProperty("title", listing.getTitle());
+    listingEntity.setProperty("text", listing.getText());
+    listingEntity.setProperty("timestamp", listing.getTimestamp());
+
+    datastore.put(listingEntity);
+  }
+
   /**
    * Gets messages posted by a specific user.
    *
