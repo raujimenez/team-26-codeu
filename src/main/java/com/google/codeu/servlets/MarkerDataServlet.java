@@ -22,8 +22,6 @@ import org.jsoup.safety.Whitelist;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import java.io.PrintWriter;
-
 
 /**
  * Handles fetching and saving markers data.
@@ -78,7 +76,7 @@ public class MarkerDataServlet extends HttpServlet {
 
   /** Accepts a POST request containing a new marker. */
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) {
+  public void doPost(HttpServletRequest request, HttpServletResponse response)throws IOException {
     double lat = Double.parseDouble(request.getParameter("lat"));
     double lng = Double.parseDouble(request.getParameter("lng"));
     String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
