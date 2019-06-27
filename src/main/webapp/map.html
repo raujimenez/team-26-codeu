@@ -4,16 +4,28 @@
     <title>Hello Google Maps</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuKSxxOHI1o-tBCm-wS1sqDyneVxbKAlM"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuKSxxOHI1o-tBCm-wS1sqDyneVxbKAlM&libraries=places&callback=createMap"></script>
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/navigation-loader.js"></script>
     <script src="/js/map-loader.js"> </script>
     <style>
         #map {
-            width: 500px;
+            width: 1000px;
             height: 500px;
             border: thin solid black;
         }
+
+        #pac-input {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 400px;
+        }
+
     </style>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <!--Bootstrap libraries-->
@@ -43,6 +55,7 @@
     </nav>
     <div class="container">
         <h1 class="text-center">Hello Google Maps</h1>
+        <input id="pac-input" class="controls" type="text" placeholder="Enter an address">
         <div id="map" class="text-center"></div>
             <p>This page shows a Google Map with markers! Users can only mark the location if they log in!</p>
         </div>
