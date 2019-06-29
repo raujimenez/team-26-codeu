@@ -35,6 +35,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.codeu.data.Listing;
+
 /**
  * When the user submits the form, Blobstore processes the file upload and then
  * forwards the request to this servlet. This servlet can then process the
@@ -104,10 +106,16 @@ public class FormHandlerServlet extends HttpServlet {
         String replacement = "<img src=\"$1\" />";
         String textWithImagesReplaced = userText.replaceAll(regex, replacement);
 
-        Message message = new Message(user, textWithImagesReplaced);
-        datastore.storeMessage(message);
-
-        response.sendRedirect("/user-page.html?user=" + user);
+        if(request.getParameter("title") != null) {
+            Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced);
+            datastore.storeListing(listing);
+            response.sendRedirect("/sell.html?user=" + user);
+        }
+        else {
+            Message message = new Message(user , textWithImagesReplaced);
+            datastore.storeMessage(message);
+            response.sendRedirect("/user-page.html?user=" + user);
+        }
     }
 
     /**
