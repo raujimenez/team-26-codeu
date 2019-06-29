@@ -24,8 +24,9 @@ function showMessageFormIfLoggedIn() {
         })
         .then((loginStatus) => {
             if (loginStatus.isLoggedIn) {
-                const messageForm = document.getElementById('message-form');
-                messageForm.classList.remove('hidden');
+                const messageForm = document.getElementById('message-container');
+                messageForm.innerHTML = <div id="message-container">Loading...</div>
+                fetchBlobstoreUrlAndShowForm();
             }
         });
 }
@@ -52,8 +53,8 @@ function fetchBlobstoreUrlAndShowForm() {
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
-    showMessageFormIfLoggedIn();
-    fetchBlobstoreUrlAndShowForm();
-    buildTextBox();
     addLoginOrLogoutLinkToNavigation();
+    showMessageFormIfLoggedIn();
+    buildTextBox();
+   
 }
