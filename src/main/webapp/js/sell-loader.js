@@ -24,8 +24,9 @@ function showMessageFormIfLoggedIn() {
         })
         .then((loginStatus) => {
             if (loginStatus.isLoggedIn) {
-                const messageForm = document.getElementById('message-form');
-                messageForm.classList.remove('hidden');
+                const messageForm = document.getElementById('message-container');
+                messageForm.innerHTML = '<div id="message-container">Loading...</div>';
+                fetchBlobstoreUrlAndShowForm();
             }
         });
 }
@@ -46,14 +47,15 @@ function fetchBlobstoreUrlAndShowForm() {
             const messageForm = document.getElementById('message-form');
             messageForm.action = imageUploadUrl;
             messageForm.classList.remove('hidden');
+            messageContainer= document.getElementById('message-container');
+            messageContainer.innerHTML = '';
         });
 }
 
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
-    showMessageFormIfLoggedIn();
-    fetchBlobstoreUrlAndShowForm();
-    buildTextBox();
     addLoginOrLogoutLinkToNavigation();
+    showMessageFormIfLoggedIn();
+    buildTextBox();
 }
