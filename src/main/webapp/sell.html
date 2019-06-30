@@ -24,8 +24,8 @@ limitations under the License.
 
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
-    <script src="/js/sell-loader.js"></script>
-    <script src="/js/navigation-loader.js"></script>
+    <script type="text/javascript" src="/js/sell-loader.js"></script>
+    <script type="text/javascript" src="/js/navigation-loader.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
@@ -63,8 +63,9 @@ limitations under the License.
     </nav>
     <div class="container">
         <div class="row">
-            <h1 id="page-title" class="col text-center">User Page</h1>
+            <h1 id="page-title" class="col text-center">Sell something!</h1>
         </div>
+        <h5>On this page you will be able to post an item for sale, everyone will be able to see your items for sale in the Buy something! page</h5>
         <form id="message-form" action="/messages" method="POST" class="hidden" enctype="multipart/form-data">
             <h2>Title of your post</h2>
             <br />
@@ -87,7 +88,7 @@ limitations under the License.
             </div>
         </form>
         <hr />
-        <div id="message-container">Loading...</div>
+        <div id="message-container">You have to be logged in order to be able to sell something</div>
     </div>
 </body>
 
