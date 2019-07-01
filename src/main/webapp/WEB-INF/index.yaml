@@ -18,3 +18,9 @@ indexes:
   - name: user
   - name: timestamp
     direction: desc
+    
+- kind: Listing
+  properties:
+  - name: user
+  - name: timestamp
+    direction: desc    
