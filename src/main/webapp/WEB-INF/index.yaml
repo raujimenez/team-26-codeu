@@ -18,3 +18,10 @@ indexes:
   - name: user
   - name: timestamp
     direction: desc
+
+indexes:
+- kind: Listing
+  properties:
+  - name: user
+  - name: timestamp
+    direction: desc
