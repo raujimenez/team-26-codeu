@@ -44,7 +44,7 @@ public class ListingServlet extends HttpServlet {
   }
 
   /**
-   * Responds with a JSON representation of {@link Listing} data for a specific user. 
+   * Responds with a JSON representation of {@link Listing} data for a specific user or a given id.
    * Responds with an empty array if the user is not provided.
    */
   @Override
@@ -53,18 +53,37 @@ public class ListingServlet extends HttpServlet {
     response.setContentType("application/json");
 
     String user = request.getParameter("user");
+    String id = request.getParameter("id");
 
-    if (user == null || user.equals("")) {
-      // Request is invalid, return empty array
+    if ((isAbsent(user) && isAbsent(id)) || (!isAbsent(user) && !isAbsent(id)) ) {
+      /**
+       * if /listings contains user and id or if it does not contain any of the parameter
+       * return an empty array
+       */
       response.getWriter().println("[]");
       return;
     }
+    else if (!isAbsent(user) && isAbsent(id)) {
+      /** user present but no id present
+       * return a json of all listings from that user
+       */
+      List<Listing> listings = datastore.getListings(user,"user");
+      Gson gson = new Gson();
+      String json = gson.toJson(listings);
+      response.getWriter().println(json);
+      return;
+    }
+    else if (isAbsent(user) && !isAbsent(id)) {
+      /** user absent but id present
+       * return a json of all listings given that id
+       */
+      List<Listing> listings = datastore.getListings(id, "id");
+      Gson gson = new Gson();
+      String json = gson.toJson(listings);
+      response.getWriter().println(json);
+      return;
+    }
 
-    List<Listing> listings = datastore.getListings(user);
-    Gson gson = new Gson();
-    String json = gson.toJson(listings);
-
-    response.getWriter().println(json);
   }
 
   /** Stores a new {@link Listing}. */
@@ -96,6 +115,16 @@ public class ListingServlet extends HttpServlet {
     datastore.storeListing(listing);
 
     response.sendRedirect("/user-page.html?user=" + user);
+  }
+
+  /**
+   * Checks if the parameter is valid on a request
+   * Used as a helper function for doGet method
+   * @param requestParameter value returned from request.getParameter()
+   * @return boolean true if absent, false if not absent
+   **/
+  private boolean isAbsent(String requestParameter) {
+    return requestParameter == null || requestParameter.equals("");
   }
 
 }
