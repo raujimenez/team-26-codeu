@@ -58,6 +58,9 @@ public class Datastore {
     listingEntity.setProperty("title", listing.getTitle());
     listingEntity.setProperty("text", listing.getText());
     listingEntity.setProperty("timestamp", listing.getTimestamp());
+    listingEntity.setProperty("lat", listing.getLat());
+    listingEntity.setProperty("lng", listing.getLng());
+    listingEntity.setProperty("content", listing.getContent());
 
     datastore.put(listingEntity);
   }
@@ -164,8 +167,11 @@ public class Datastore {
         String title = (String) entity.getProperty("title");
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
+        double lat= (double) entity.getProperty("lat");
+        double lng= (double) entity.getProperty("lng");
+        String content= (String) entity.getProperty("content");
 
-        Listing listing = new Listing(id, user, title, text, timestamp);
+        Listing listing = new Listing(id, user, title, text, timestamp, lat, lng, content);
         listings.add(listing);
       } catch (Exception e) {
         System.err.println("Error reading listing.");
