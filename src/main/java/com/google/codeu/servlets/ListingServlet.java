@@ -92,7 +92,7 @@ public class ListingServlet extends HttpServlet {
     
     String textWithImagesReplaced = userText.replaceAll(regex, replacement);
 
-    Listing listing = new Listing(user, listingTitle, textWithImagesReplaced);
+    Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0, 0, null);
     datastore.storeListing(listing);
 
     response.sendRedirect("/user-page.html?user=" + user);
