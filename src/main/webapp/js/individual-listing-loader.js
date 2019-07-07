@@ -1,6 +1,12 @@
 const urlParams = new URLSearchParams(window.location.search);
 const parameterID = urlParams.get("id");
 
+/* Pass in the listings object from fetListings to set the title*/
+function setPageTitle(listing) {
+  document.getElementById('page-title').innerText = listing.title;
+  document.title = listing.title;
+}
+
 function fetchListings() {
   const url = "/listings?id=" + parameterID;
   fetch(url)
@@ -15,6 +21,7 @@ function fetchListings() {
         listingsContainer.innerHTML = "";
       }
       listings.forEach(listing => {
+        setPageTitle(listing);
         const listingDiv = buildListingsDiv(listing);
         listingsContainer.appendChild(listingDiv);
       });
