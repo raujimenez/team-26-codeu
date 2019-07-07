@@ -22,5 +22,6 @@ indexes:
 - kind: Listing
   properties:
   - name: user
+  - name: id
   - name: timestamp
     direction: desc    

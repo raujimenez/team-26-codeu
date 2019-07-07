@@ -54,6 +54,7 @@ public class Datastore {
   /* Stores new listing in Datastore*/
   public void storeListing(Listing listing) {
     Entity listingEntity = new Entity("Listing", listing.getId().toString());
+    listingEntity.setProperty("id", listing.getId().toString());
     listingEntity.setProperty("user", listing.getUser());
     listingEntity.setProperty("title", listing.getTitle());
     listingEntity.setProperty("text", listing.getText());
@@ -84,10 +85,10 @@ public class Datastore {
    * @return a list of listing posted by the user, or empty list if user has never posted a
    *     listing. List is sorted by time descending.
    */
-  public List<Listing> getListings(String user) {
+  public List<Listing> getListings(String key, String searchIndex) {
     Query query =
         new Query("Listing")
-            .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+            .setFilter(new Query.FilterPredicate(searchIndex, FilterOperator.EQUAL, key))
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
