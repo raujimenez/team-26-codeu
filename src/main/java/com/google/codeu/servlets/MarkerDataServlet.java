@@ -8,6 +8,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.gson.Gson;
 import com.google.codeu.data.Marker;
+import com.google.codeu.data.Listing;
+import com.google.codeu.data.Datastore;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +30,13 @@ import com.google.appengine.api.users.UserServiceFactory;
  */
 @WebServlet("/markers")
 public class MarkerDataServlet extends HttpServlet {
+
+  private Datastore datastore;
+
+  @Override
+  public void init() {
+    datastore = new Datastore();
+  }
 
 
   /** Stores a marker in Datastore. */
@@ -83,6 +92,11 @@ public class MarkerDataServlet extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
       if (userService.isUserLoggedIn()) {
+
+        String user = userService.getCurrentUser().getEmail();
+        Listing listing = new Listing(user,"marker_in_map", null, lat, lng, content);
+        datastore.storeListing(listing);
+
         Marker marker = new Marker(lat, lng, content);
         storeMarker(marker);
       }
