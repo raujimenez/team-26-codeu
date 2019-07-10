@@ -1,10 +1,10 @@
-let map;
+let map, infoWindow;
 /* Editable marker that displays when a user clicks in the map. */
 let editMarker;
 function createMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 38.5949, lng: -94.8923},
-        zoom: 4
+        zoom: 6
     });
     // When the user clicks in the map, show a marker with a text box the user can edit.
     map.addListener('click', (event) => {
@@ -12,6 +12,30 @@ function createMap() {
     });
     //not allow user to see other markers
    // fetchMarkers();
+
+
+    //Get user location and show an open window with information
+    infoWindow = new google.maps.InfoWindow;
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('You are here');
+            infoWindow.open(map);
+            map.setCenter(pos);
+        }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+
 
 
 // Create the search box and link it to the UI element.
@@ -75,7 +99,14 @@ function createMap() {
 
 }
 
-
+/**Handle error if cannot find user's location*/
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+}
 
 /** Fetches markers from the backend and adds them to the map. */
 function fetchMarkers(){
@@ -92,6 +123,7 @@ function createMarkerForDisplay(lat, lng, content){
     const marker = new google.maps.Marker({
         position: {lat: lat, lng: lng},
         map: map
+
     });
     var infoWindow = new google.maps.InfoWindow({
         content: content
