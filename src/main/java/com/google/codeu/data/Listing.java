@@ -29,16 +29,16 @@ public class Listing {
   private double lat;
   private double lng;
   private String content;
-
+  private double price;
   /**
    * Constructs a new {@link Listing} posted by {@code user} with {@code title} Lable and {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
-  public Listing(String user, String title, String text, double lat, double lng, String content) {
-    this(UUID.randomUUID(), user, title, text, System.currentTimeMillis(), lat, lng, content);
+  public Listing(String user, String title, String text, double lat, double lng, String content, double price) {
+    this(UUID.randomUUID(), user, title, text, System.currentTimeMillis(), lat, lng, content, price);
   }
 
-  public Listing(UUID id, String user, String title, String text, long timestamp, double lat, double lng, String content) {
+  public Listing(UUID id, String user, String title, String text, long timestamp, double lat, double lng, String content, double price) {
     this.id = id;
     this.user = user;
     this.title = title;
@@ -47,6 +47,7 @@ public class Listing {
     this.lat = lat;
     this.lng = lng;
     this.content = content;
+    this.price = price;
   }
 
   public UUID getId() {
@@ -79,5 +80,8 @@ public class Listing {
 
   public String getContent() {
     return content;
+  }
+  public double getPrice() {
+    return price;
   }
 }

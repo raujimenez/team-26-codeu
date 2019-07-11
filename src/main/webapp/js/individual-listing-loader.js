@@ -56,7 +56,7 @@ function buildListingsDiv(listing) {
   const tableRow = document.createElement("tr");
   
   const listingTitle = document.createElement("td");
-  listingTitle.innerHTML = '<font size=+1.5>' + listing.title + '</font>';
+  listingTitle.innerHTML = '<font size=+1.5>' + listing.title + '<span class="badge badge-success" style="margin-left: 0.5em">  ' + listing.price + '</span>' +'</font>';
   const listingDate = document.createElement("td");
   listingDate.classList.add("text-right");
   listingDate.innerHTML = '<font class="text-right text-muted" size="-1">' + new Date(listing.timestamp).toLocaleTimeString('en-US') + '</font>';

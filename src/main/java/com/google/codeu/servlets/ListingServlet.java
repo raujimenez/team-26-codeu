@@ -99,6 +99,7 @@ public class ListingServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String listingTitle = request.getParameter("title");
     String userEnteredContent = request.getParameter("text");
+    double price = Double.parseDouble(request.getParameter("price"));
 
     Whitelist whitelist = Whitelist.relaxed();
     whitelist.addTags("span");
@@ -111,7 +112,7 @@ public class ListingServlet extends HttpServlet {
     
     String textWithImagesReplaced = userText.replaceAll(regex, replacement);
 
-    Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0, 0, null);
+    Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0, 0, "", price);
     datastore.storeListing(listing);
 
     response.sendRedirect("/user-page.html?user=" + user);
