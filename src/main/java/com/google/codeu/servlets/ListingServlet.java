@@ -16,14 +16,21 @@
 
 package com.google.codeu.servlets;
 
+import com.google.appengine.api.blobstore.*;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Listing;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -101,6 +108,29 @@ public class ListingServlet extends HttpServlet {
     String userEnteredContent = request.getParameter("text");
     double price = Double.parseDouble(request.getParameter("price"));
 
+    BlobKey blobKey = getBlobKey(request, "image");
+    String imageUrl = "";
+    //Add the html tags if the user uploaded an image
+    if (blobKey != null) {
+      // Get the URL of the image that the user uploaded.
+      imageUrl = getUploadedFileUrl(blobKey);
+
+      ArrayList<String> labels = new ArrayList<String>();
+
+            /*
+            // Get the labels of the image that the user uploaded.
+            byte[] blobBytes = getBlobBytes(blobKey);
+            List<EntityAnnotation> imageLabels = getImageLabels(blobBytes);
+
+            for (EntityAnnotation label : imageLabels) {
+                labels.add(label.getDescription() + ": " + label.getScore());
+            }
+            */
+
+      String joinedLabels = String.join(" ", labels);
+      userEnteredContent +=  "   " + joinedLabels;
+    }
+
     Whitelist whitelist = Whitelist.relaxed();
     whitelist.addTags("span");
     whitelist.addAttributes("span", "style");
@@ -112,7 +142,7 @@ public class ListingServlet extends HttpServlet {
     
     String textWithImagesReplaced = userText.replaceAll(regex, replacement);
 
-    Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0, 0, "", price);
+    Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0, 0, "", price, imageUrl);
     datastore.storeListing(listing);
 
     response.sendRedirect("/user-page.html?user=" + user);
@@ -126,6 +156,42 @@ public class ListingServlet extends HttpServlet {
    **/
   private boolean isAbsent(String requestParameter) {
     return requestParameter == null || requestParameter.equals("");
+  }
+
+
+  /**
+   * Returns the BlobKey that points to the file uploaded by the user, or null if
+   * the user didn't upload a file.
+   */
+  private BlobKey getBlobKey(HttpServletRequest request, String formInputElementName) {
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get("image");
+
+    // User submitted form without selecting a file, so we can't get a BlobKey.
+    // (devserver)
+    if (blobKeys == null || blobKeys.isEmpty()) {
+      return null;
+    }
+
+    // Our form only contains a single file input, so get the first index.
+    BlobKey blobKey = blobKeys.get(0);
+
+    // User submitted form without selecting a file, so the BlobKey is empty. (live
+    // server)
+    BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
+    if (blobInfo.getSize() == 0) {
+      blobstoreService.delete(blobKey);
+      return null;
+    }
+
+    return blobKey;
+  }
+
+  private String getUploadedFileUrl(BlobKey blobKey) {
+    ImagesService imagesService = ImagesServiceFactory.getImagesService();
+    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+    return imagesService.getServingUrl(options);
   }
 
 }

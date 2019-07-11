@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -69,11 +71,11 @@ public class FormHandlerServlet extends HttpServlet {
         BlobKey blobKey = getBlobKey(request, "image");
 
         String userEnteredContent;
-
+        String imageUrl = "";
         //Add the html tags if the user uploaded an image
         if (blobKey != null) {
             // Get the URL of the image that the user uploaded.
-            String imageUrl = getUploadedFileUrl(blobKey);
+            imageUrl = getUploadedFileUrl(blobKey);
             String tags = "<img src=\"" + imageUrl + "\"/>";
 
             ArrayList<String> labels = new ArrayList<String>();
@@ -89,7 +91,7 @@ public class FormHandlerServlet extends HttpServlet {
             */
             
             String joinedLabels = String.join(" ", labels);
-            userEnteredContent = text + " " + tags + " " + joinedLabels;
+            userEnteredContent = text + "  " + joinedLabels;
         }
         else {
             userEnteredContent = text;
@@ -107,7 +109,7 @@ public class FormHandlerServlet extends HttpServlet {
         String textWithImagesReplaced = userText.replaceAll(regex, replacement);
 
         if(request.getParameter("title") != null) {
-            Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0.0, 0.0, null, Double.parseDouble(request.getParameter("price")));
+            Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0.0, 0.0, null, Double.parseDouble(request.getParameter("price")), imageUrl);
             datastore.storeListing(listing);
             response.sendRedirect("/sell.html?user=" + user);
         }
