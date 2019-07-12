@@ -11,13 +11,24 @@ function fetchMessages() {
         else {
             messageContainer.innerHTML = '';
         }
+
+        cardDeck = buildDeck();
+
         messages.forEach((message) => {
             const messageDiv = buildMessageDiv(message);
-            messageContainer.appendChild(messageDiv);
+            cardDeck.appendChild(messageDiv);
         });
+        messageContainer.appendChild(cardDeck);
     });
 
     addLoginOrLogoutLinkToNavigation();
+}
+
+function buildDeck() {
+    cardDeckDiv = document.createElement('div');
+    cardDeckDiv.classList.add('card-deck');
+
+    return cardDeckDiv;
 }
 
 // Builds an element that displays the message.
@@ -52,7 +63,54 @@ function buildMessageDiv(message) {
     messageDiv.appendChild(headerDiv);
     messageDiv.appendChild(bodyDiv);
 
-    return messageDiv;
+    const cardTitle = document.createElement('h5');
+    cardTitle.classList.add('card-title');
+    cardTitle.appendChild(document.createTextNode(message.title));
+
+    const cardPrice = document.createElement('h6');
+    cardPrice.classList.add('card-subtitle');
+    cardPrice.classList.add('mb-2');
+    cardPrice.classList.add('text-muted');
+    cardPrice.appendChild(document.createTextNode(message.price));
+
+    const cardImage = document.createElement('img');
+    cardImage.classList.add('card-img-top');
+    if (message.imageUrl != '') {
+        cardImage.src = message.imageUrl;
+    }
+    else {
+        cardImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png';
+    }
+
+    const cardText = document.createElement('div');
+    cardText.classList.add('card-text');
+    cardText.innerHTML = message.text; 
+
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardPrice);
+    cardBody.appendChild(cardText);
+
+    const cardBtn = document.createElement('a');
+    cardBtn.classList.add('btn');
+    cardBtn.classList.add('btn-primary');
+    cardBtn.href = '#';
+    cardBtn.innerHTML = 'See more details';
+
+    const cardFooter = document.createElement('div');
+    cardFooter.classList.add('card-footer');
+    cardFooter.appendChild(cardBtn);
+
+
+    const cardDiv = document.createElement('div');
+    cardDiv.classList.add('card');
+    cardDiv.style.cssText = 'width: 18rem;';
+    cardDiv.appendChild(cardImage);
+    cardDiv.appendChild(cardBody);
+    cardDiv.appendChild(cardFooter);
+
+    return cardDiv;
 }
 
 // Fetch data and populate the UI of the page.
