@@ -111,7 +111,7 @@ public class FormHandlerServlet extends HttpServlet {
         if(request.getParameter("title") != null) {
             Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0.0, 0.0, null, Double.parseDouble(request.getParameter("price")), imageUrl);
             datastore.storeListing(listing);
-            response.sendRedirect("/sell.html?user=" + user);
+            response.sendRedirect("/viewListing.html?id=" + listing.getId().toString());
         }
         else {
             Message message = new Message(user , textWithImagesReplaced);
