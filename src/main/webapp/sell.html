@@ -67,39 +67,55 @@ limitations under the License.
         <div class="row">
             <h1 id="page-title" class="col text-center">Sell something!</h1>
         </div>
-        <h5>On this page you will be able to post an item for sale, everyone will be able to see your items for sale in the Buy something! page</h5>
+        <br />
         <form id="message-form" action="/messages" method="POST" class="hidden" enctype="multipart/form-data">
-            <h2>Title of your post</h2>
-            <br />
-            <textarea name="title" id="title-input"></textarea>
-            <br />
-            
-            <br />
-            <textarea name="text" id="message-input"></textarea>
-            <br />
-            <h4>Where are you going to make the sales?</h4>
-            <p>You can mark the map.<br />
-                Your markers with title can be displayed in <a href="/map.html">Google Map</a> page.</p>
-            <div class="row">
-            <input id="pac-input" class="controls" type="text" placeholder="Enter an address">
-            <div id="map" class="text-center"></div>
-            </div>
-            <br />
 
-            <div class="row">
-                <div class="col">
-                    <label class="btn btn-secondary btn-block btn-space float-right">
-                        Upload Image <input type="file" style="display: none;" name="image">
-                    </label>
-                </div>
-                <div class="col">
-                    <button class="btn btn-primary btn-block btn-space">Post</button>
+        <br />
+        <!--title and price forms-->
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Title</span>
+                    </div>
+                    <input type="text" placeholder="Title" name="title" class="form-control">
                 </div>
             </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input type="number" placeholder="0.00" name="price" id="price-input" min="0" step="0.01" class="form-control">
+                </div>
+            </div>
+        </div>
 
-
-
-
+        <!--text area and maps forms-->
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                <textarea name="text" id="message-input"></textarea>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                <p>You can mark the map and put the content on the marker: time, notes, etc.
+                    Your markers can be displayed in <a href="/map.html">Google Map</a> page.</p>
+                <div class="row">
+                <input id="pac-input" class="controls" type="text" placeholder="Enter an address">
+                <div id="map" class="text-center"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Buttons -->
+        <div class="row">
+            <div class="col">
+                <label class="btn btn-secondary btn-block btn-space float-right">
+                    Upload Image <input type="file" style="display: none;" name="image">
+                </label>
+            </div>
+            <div class="col">
+                <button class="btn btn-primary btn-block btn-space">Post</button>
+            </div>
+        </div>
         </form>
         <hr />
         <div id="message-container">You have to be logged in order to be able to sell something</div>

@@ -35,7 +35,9 @@ function showMessageFormIfLoggedIn() {
  * Builds the rich text editor using CKEditor 5
  */
 function buildTextBox() {
-    ClassicEditor.create(document.getElementById('message-input'));
+    ClassicEditor.create(document.getElementById('message-input'), {
+        removePlugins: ['MediaEmbed', 'ImageToolbar', 'ImageUpload']
+    });
 }
 
 function fetchBlobstoreUrlAndShowForm() {
