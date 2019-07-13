@@ -14,6 +14,7 @@ import com.google.codeu.data.Datastore;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -52,21 +53,27 @@ public class MarkerDataServlet extends HttpServlet {
 
   }
 
-  /** Fetches markers from Datastore. */
+  /** Fetches markers from listing. */
   private List<Marker> getMarkers() {
     List<Marker> markers = new ArrayList<>();
+    List<Listing>allListings=datastore.getAllListings();
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query("Marker");
-    PreparedQuery results = datastore.prepare(query);
+    String markerContent=null;
+    UUID id = null;
 
-    for (Entity entity : results.asIterable()) {
-      double lat = (double) entity.getProperty("lat");
-      double lng = (double) entity.getProperty("lng");
-      String content = (String) entity.getProperty("content");
+    for(int i=0; i<allListings.size();i++){
 
-      Marker marker = new Marker(lat, lng, content);
-      markers.add(marker);
+      Listing listingObject = allListings.get(i);
+
+      if(!listingObject.getTitle().equals("marker_in_map")){
+        markerContent = listingObject.getTitle();
+        id=listingObject.getId();
+      }else{
+        double lat = listingObject.getLat();
+        double lng = listingObject.getLng();
+        Marker marker = new Marker (lat, lng,markerContent,id);
+        markers.add(marker);
+      }
     }
     return markers;
   }
@@ -97,7 +104,7 @@ public class MarkerDataServlet extends HttpServlet {
         Listing listing = new Listing(user,"marker_in_map", null, lat, lng, content);
         datastore.storeListing(listing);
 
-        Marker marker = new Marker(lat, lng, content);
+        Marker marker = new Marker(lat, lng, content, null);
         storeMarker(marker);
       }
     }
