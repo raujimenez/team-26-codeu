@@ -11,48 +11,83 @@ function fetchMessages() {
         else {
             messageContainer.innerHTML = '';
         }
+
+        cardDeck = buildDeck();
+
         messages.forEach((message) => {
             const messageDiv = buildMessageDiv(message);
-            messageContainer.appendChild(messageDiv);
+            cardDeck.appendChild(messageDiv);
         });
+        messageContainer.appendChild(cardDeck);
     });
 
     addLoginOrLogoutLinkToNavigation();
 }
 
+function buildDeck() {
+    cardDeckDiv = document.createElement('div');
+    cardDeckDiv.classList.add('card-deck');
+
+    return cardDeckDiv;
+}
+
 // Builds an element that displays the message.
 function buildMessageDiv(message) {
-    const usernameDiv = document.createElement('div');
-    usernameDiv.classList.add("left-align");
-    usernameDiv.appendChild(document.createTextNode(message.user));
 
+    /*
     const timeDiv = document.createElement('div');
     timeDiv.classList.add('right-align');
     timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
+    */ 
 
-    const headerDiv = document.createElement('div');
-    headerDiv.classList.add('message-header');
-    headerDiv.classList.add('padded');
-    headerDiv.classList.add('border-bottom');
-    headerDiv.appendChild(usernameDiv);
-    headerDiv.appendChild(timeDiv);
+    const cardTitle = document.createElement('h5');
+    cardTitle.classList.add('card-title');
+    cardTitle.appendChild(document.createTextNode(message.title));
 
-    const bodyDiv = document.createElement('div');
-    bodyDiv.classList.add('message-body');
-    bodyDiv.classList.add('padded');
-    bodyDiv.classList.add('border-left');
-    bodyDiv.classList.add('border-bottom');
-    bodyDiv.classList.add('border-right');
-    bodyDiv.innerHTML = message.text;
+    const cardPrice = document.createElement('h6');
+    cardPrice.classList.add('card-subtitle');
+    cardPrice.classList.add('mb-2');
+    cardPrice.classList.add('text-muted');
+    cardPrice.appendChild(document.createTextNode(message.price));
 
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add("message-div");
-    messageDiv.classList.add('rounded');
-    messageDiv.classList.add('panel');
-    messageDiv.appendChild(headerDiv);
-    messageDiv.appendChild(bodyDiv);
+    const cardImage = document.createElement('img');
+    cardImage.classList.add('card-img-top');
+    if (message.imageUrl != '') {
+        cardImage.src = message.imageUrl;
+    }
+    else {
+        cardImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png';
+    }
 
-    return messageDiv;
+    const cardText = document.createElement('div');
+    cardText.classList.add('card-text');
+    cardText.innerHTML = message.text; 
+
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardPrice);
+    cardBody.appendChild(cardText);
+
+    const cardBtn = document.createElement('a');
+    cardBtn.classList.add('btn');
+    cardBtn.classList.add('btn-primary');
+    cardBtn.href = '#';
+    cardBtn.innerHTML = 'See more details';
+
+    const cardFooter = document.createElement('div');
+    cardFooter.classList.add('card-footer');
+    cardFooter.appendChild(cardBtn);
+
+
+    const cardDiv = document.createElement('div');
+    cardDiv.classList.add('card');
+    cardDiv.style.cssText = 'width: 18rem;';
+    cardDiv.appendChild(cardImage);
+    cardDiv.appendChild(cardBody);
+    cardDiv.appendChild(cardFooter);
+
+    return cardDiv;
 }
 
 // Fetch data and populate the UI of the page.
