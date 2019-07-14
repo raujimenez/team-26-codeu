@@ -101,7 +101,8 @@ public class MarkerDataServlet extends HttpServlet {
       if (userService.isUserLoggedIn()) {
         String user = userService.getCurrentUser().getEmail();
         String images = "";
-        Listing listing = new Listing(user,"marker_in_map", null, lat, lng, content, 0.00, images);
+        String text = "";
+        Listing listing = new Listing(user,"marker_in_map", "", lat, lng, content, 0.00, images);
         datastore.storeListing(listing);
 
         Marker marker = new Marker(lat, lng, content, null);

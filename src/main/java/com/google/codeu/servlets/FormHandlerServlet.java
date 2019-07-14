@@ -109,7 +109,7 @@ public class FormHandlerServlet extends HttpServlet {
         String textWithImagesReplaced = userText.replaceAll(regex, replacement);
 
         if(request.getParameter("title") != null) {
-            Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0.0, 0.0, null, Double.parseDouble(request.getParameter("price")), imageUrl);
+            Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0.0, 0.0, "", Double.parseDouble(request.getParameter("price")), imageUrl);
             datastore.storeListing(listing);
             response.sendRedirect("/viewListing.html?id=" + listing.getId().toString());
         }
