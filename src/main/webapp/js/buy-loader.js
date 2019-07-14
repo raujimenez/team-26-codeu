@@ -72,7 +72,7 @@ function buildMessageDiv(message) {
     const cardBtn = document.createElement('a');
     cardBtn.classList.add('btn');
     cardBtn.classList.add('btn-primary');
-    cardBtn.href = '#';
+    cardBtn.href = '/viewListing.html?id=' + message.id;
     cardBtn.innerHTML = 'See more details';
 
     const cardFooter = document.createElement('div');
