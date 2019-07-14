@@ -109,20 +109,21 @@ function fetchMarkers(){
         return response.json();
     }).then((markers) => {
         markers.forEach((marker) => {
-            createMarkerForDisplay(marker.lat, marker.lng, marker.content)
+            createMarkerForDisplay(marker.lat, marker.lng, marker.content, marker.markerid)
         });
     });
 }
 /** Creates a marker that shows a read-only info window when clicked. */
-function createMarkerForDisplay(lat, lng, content){
+function createMarkerForDisplay(lat, lng, content, markerid){
     const marker = new google.maps.Marker({
         position: {lat: lat, lng: lng},
         map: map
     });
     var infoWindow = new google.maps.InfoWindow({
-        content: content
+        content:"<div>"+content+"<br><button onclick=\"\location.href = 'viewListing.html?id="+markerid+"';\"\ >To The Post</button></div>"
+
     });
     marker.addListener('click', () => {
-        infoWindow.open(map, marker);
+       infoWindow.open(map, marker);
     });
 }

@@ -10,8 +10,6 @@ function createMap() {
     map.addListener('click', (event) => {
         createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
     });
-    //not allow user to see other markers
-   // fetchMarkers();
 
 
     //Get user location and show an open window with information
@@ -108,16 +106,6 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 }
 
-/** Fetches markers from the backend and adds them to the map. */
-function fetchMarkers(){
-    fetch('/markers').then((response) => {
-        return response.json();
-    }).then((markers) => {
-       markers.forEach((marker) => {
-           createMarkerForDisplay(marker.lat, marker.lng, marker.content)
-       });
-    });
-}
 /** Creates a marker that shows a read-only info window when clicked. */
 function createMarkerForDisplay(lat, lng, content){
     const marker = new google.maps.Marker({
@@ -164,16 +152,18 @@ function createMarkerForEdit(lat, lng){
 }
 /** Builds and returns HTML elements that show an editable textbox and a submit button. */
 function buildInfoWindowInput(lat, lng){
-    const textBox = document.createElement('textarea');
+   // const textBox = document.createElement('textarea');
     const button = document.createElement('button');
     button.appendChild(document.createTextNode('Submit'));
     button.onclick = () => {
-        postMarker(lat, lng, textBox.value);
-        createMarkerForDisplay(lat, lng, textBox.value);
+        //postMarker(lat, lng, textBox.value);
+        //createMarkerForDisplay(lat, lng, textBox.value);
+        postMarker(lat, lng, null);
+        createMarkerForDisplay(lat, lng, null);
         editMarker.setMap(null);
     };
     const containerDiv = document.createElement('div');
-    containerDiv.appendChild(textBox);
+    //containerDiv.appendChild(textBox);
     containerDiv.appendChild(document.createElement('br'));
     containerDiv.appendChild(button);
     return containerDiv;
