@@ -39,7 +39,7 @@ function buildListingsDiv(listing) {
   pictureDiv.classList.add("col-lg-6");
   pictureDiv.classList.add("col-md-6");
   pictureDiv.classList.add("col-sm");
-  pictureDiv.src = "http://newnation.sg/wp-content/uploads/random-pic-internet-07.jpg";
+  pictureDiv.src = listing.imageUrl;
   pictureDiv.alt = "seller image";
 
   /* create card-header for title and timestamp */
@@ -56,7 +56,7 @@ function buildListingsDiv(listing) {
   const tableRow = document.createElement("tr");
   
   const listingTitle = document.createElement("td");
-  listingTitle.innerHTML = '<font size=+1.5>' + listing.title + '</font>';
+  listingTitle.innerHTML = '<font size=+1.5>' + listing.title + '<span class="badge badge-success" style="margin-left: 0.5em"> $' + listing.price.toFixed(2) + '</span>' +'</font>';
   const listingDate = document.createElement("td");
   listingDate.classList.add("text-right");
   listingDate.innerHTML = '<font class="text-right text-muted" size="-1">' + new Date(listing.timestamp).toLocaleTimeString('en-US') + '</font>';
