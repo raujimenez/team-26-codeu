@@ -14,11 +14,23 @@ function fetchMessages() {
 
         cardDeck = buildDeck();
 
+        count = -1;
+
         messages.forEach((message) => {
+            count++;
+            if (count == 3) {
+                completeDeck = createRow(cardDeck); 
+                messageContainer.appendChild(completeDeck);
+                cardDeck = buildDeck();
+                count = 0; 
+            }
+            
             const messageDiv = buildMessageDiv(message);
             cardDeck.appendChild(messageDiv);
         });
-        messageContainer.appendChild(cardDeck);
+        completeDeck = createRow(cardDeck);
+        messageContainer.appendChild(completeDeck);
+       // messageContainer.appendChild(cardDeck);
     });
 
     addLoginOrLogoutLinkToNavigation();
@@ -31,6 +43,13 @@ function buildDeck() {
     return cardDeckDiv;
 }
 
+function createRow(cardDeckRow) {
+    cardRow = document.createElement('row'); 
+    cardRow.appendChild(cardDeckRow);
+
+    return cardRow;
+}
+ 
 // Builds an element that displays the message.
 function buildMessageDiv(message) {
 
@@ -83,6 +102,7 @@ function buildMessageDiv(message) {
 
     const cardDiv = document.createElement('div');
     cardDiv.classList.add('card');
+    cardDiv.classList.add('border-primary');
     cardDiv.style.cssText = 'width: 18rem;';
     cardDiv.appendChild(cardImage);
     cardDiv.appendChild(cardBody);
