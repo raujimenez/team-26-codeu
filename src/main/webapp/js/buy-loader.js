@@ -48,7 +48,8 @@ function buildMessageDiv(message) {
     cardPrice.classList.add('card-subtitle');
     cardPrice.classList.add('mb-2');
     cardPrice.classList.add('text-muted');
-    cardPrice.appendChild(document.createTextNode(message.price));
+  //  cardPrice.appendChild(document.createTextNode(message.price));
+    cardPrice.innerHTML = '<span class="badge badge-success"> $' + message.price.toFixed(2) + '</span>' + '</font>';
 
     const cardImage = document.createElement('img');
     cardImage.classList.add('card-img-top');
@@ -72,7 +73,7 @@ function buildMessageDiv(message) {
     const cardBtn = document.createElement('a');
     cardBtn.classList.add('btn');
     cardBtn.classList.add('btn-primary');
-    cardBtn.href = '#';
+    cardBtn.href = '/viewListing.html?id=' + message.id;
     cardBtn.innerHTML = 'See more details';
 
     const cardFooter = document.createElement('div');
