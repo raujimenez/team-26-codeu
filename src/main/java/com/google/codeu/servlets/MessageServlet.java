@@ -19,6 +19,7 @@ package com.google.codeu.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
+import com.google.codeu.data.Listing;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -53,6 +54,7 @@ public class MessageServlet extends HttpServlet {
     response.setContentType("application/json");
 
     String user = request.getParameter("user");
+    String email = request.getParameter("name");
 
     if (user == null || user.equals("")) {
       // Request is invalid, return empty array
@@ -60,9 +62,9 @@ public class MessageServlet extends HttpServlet {
       return;
     }
 
-    List<Message> messages = datastore.getMessages(user);
+    List<Listing> listings = datastore.getListings(user, "user");
     Gson gson = new Gson();
-    String json = gson.toJson(messages);
+    String json = gson.toJson(listings);
 
     response.getWriter().println(json);
   }
