@@ -32,6 +32,7 @@ function setPageTitle() {
 /**
  * Shows the message form if the user is logged in and viewing their own page.
  */
+/*
 function showMessageFormIfViewingSelf() {
   fetch('/login-status')
       .then((response) => {
@@ -45,7 +46,7 @@ function showMessageFormIfViewingSelf() {
         }
       });
 }
-
+*/
 /** Fetches messages and add them to the page. */
 function fetchMessages() {
   const url = '/messages?user=' + parameterUsername;
@@ -60,11 +61,33 @@ function fetchMessages() {
         } else {
           messagesContainer.innerHTML = '';
         }
+        unorderedList = createList();
         messages.forEach((message) => {
-          const messageDiv = buildMessageDiv(message);
-          messagesContainer.appendChild(messageDiv);
+          const messageDiv = buildMessageDiv(message); 
+          unorderedList.appendChild(messageDiv);
         });
+        messageCard = createCard(unorderedList);
+        messagesContainer.appendChild(messageCard);
       });
+}
+
+function createList() {
+  const creatingList = document.createElement("ul");
+  creatingList.classList.add('list-group');
+  creatingList.classList.add('list-group-flush');
+
+  return creatingList;
+}
+
+function createCard(cardList) {
+  const createDiv = document.createElement("div");
+  createDiv.classList.add("card");
+  createDiv.classList.add('bg-info');
+  createDiv.classList.add('mb-3');
+
+  createDiv.appendChild(cardList);
+
+  return createDiv;
 }
 
 /**
@@ -73,30 +96,27 @@ function fetchMessages() {
  * @return {Element}
  */
 function buildMessageDiv(message) {
-  const headerDiv = document.createElement('div');
-  headerDiv.classList.add('message-header');
-  headerDiv.classList.add('padded');
-  headerDiv.classList.add('border-bottom');
+  const cardBtn = document.createElement('a');
+  cardBtn.classList.add('btn');
+  cardBtn.classList.add('btn-primary');
+  cardBtn.classList.add('float-right');
+  cardBtn.href = '/viewListing.html?id=' + message.id;
+  cardBtn.innerHTML = 'See more details';
 
-  headerDiv.appendChild(document.createTextNode(
-      message.user + ' - ' + new Date(message.timestamp)));
+  const cardPrice = document.createElement('span');
+  cardPrice.classList.add('badge');
+  cardPrice.classList.add('badge-success');
+  cardPrice.style = 'margin-left: 0.5em';
+  cardPrice.innerHTML = ' $' + message.price.toFixed(2) + '</font>';
 
-  const bodyDiv = document.createElement('div');
-  bodyDiv.classList.add('message-body');
-  bodyDiv.classList.add('padded');
-  bodyDiv.classList.add('border-left');
-  bodyDiv.classList.add('border-bottom');
-  bodyDiv.classList.add('border-right');
-  bodyDiv.innerHTML = message.text;
+  const listItem = document.createElement('li'); 
+  listItem.classList.add('list-group-item');
+  listItem.classList.add('bg-light');
+  listItem.innerHTML = '<b>' + message.title + '</b>';
+  listItem.appendChild(cardPrice);
+  listItem.appendChild(cardBtn);
 
-  const messageDiv = document.createElement('div');
-  messageDiv.classList.add('message-div');
-  messageDiv.classList.add('rounded');
-  messageDiv.classList.add('panel');
-  messageDiv.appendChild(headerDiv);
-  messageDiv.appendChild(bodyDiv);
-
-  return messageDiv;
+  return listItem;
 }
 
 /**
@@ -122,7 +142,6 @@ function fetchBlobstoreUrlAndShowForm() {
 function buildUI() {
   fetchBlobstoreUrlAndShowForm();
   setPageTitle();
-  showMessageFormIfViewingSelf();
   buildTextBox();
   fetchMessages();
   addLoginOrLogoutLinkToNavigation();
