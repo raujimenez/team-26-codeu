@@ -109,7 +109,14 @@ public class FormHandlerServlet extends HttpServlet {
         String textWithImagesReplaced = userText.replaceAll(regex, replacement);
 
         if(request.getParameter("title") != null) {
-            Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0.0, 0.0, "", Double.parseDouble(request.getParameter("price")), imageUrl);
+            String priceString = request.getParameter("price");
+            double price = 0;
+            if(priceString != null && !priceString.isEmpty()) {
+                //parse the price into a double if the user inputted a price
+                price = Double.parseDouble(priceString);
+            }
+
+            Listing listing = new Listing(user, request.getParameter("title"), textWithImagesReplaced, 0.0, 0.0, "", price, imageUrl);
             datastore.storeListing(listing);
             response.sendRedirect("/viewListing.html?id=" + listing.getId().toString());
         }
