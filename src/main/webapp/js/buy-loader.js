@@ -17,16 +17,19 @@ function fetchMessages() {
         count = -1;
 
         messages.forEach((message) => {
-            count++;
-            if (count == 3) {
-                completeDeck = createRow(cardDeck); 
-                messageContainer.appendChild(completeDeck);
-                cardDeck = buildDeck();
-                count = 0; 
+            if(message.title != "marker_in_map") {
+                // Temporary solution: create card only if it is a listing and not a marker
+                count++;
+                if (count == 3) {
+                    completeDeck = createRow(cardDeck); 
+                    messageContainer.appendChild(completeDeck);
+                    cardDeck = buildDeck();
+                    count = 0; 
+                }
+                
+                const messageDiv = buildMessageDiv(message);
+                cardDeck.appendChild(messageDiv);
             }
-            
-            const messageDiv = buildMessageDiv(message);
-            cardDeck.appendChild(messageDiv);
         });
         completeDeck = createRow(cardDeck);
         messageContainer.appendChild(completeDeck);
