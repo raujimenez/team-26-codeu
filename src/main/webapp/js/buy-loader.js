@@ -84,7 +84,16 @@ function buildMessageDiv(message) {
 
     const cardText = document.createElement('div');
     cardText.classList.add('card-text');
-    cardText.innerHTML = message.text; 
+    //cardText.innerHTML = message.text; 
+    var test = message.text;
+    test = test.replace(/<[^>]*>?/gm, '');
+    test = test.replace(/&nbsp;/g, ' ');
+    if (test.length > 50) {
+        cardText.appendChild(document.createTextNode(test.substring(0, 80) + "..."));
+    }
+    else {
+        cardText.appendChild(document.createTextNode(test.substring(0, 80)));
+    }
 
     const cardBody = document.createElement('div');
     cardBody.classList.add('card-body');
