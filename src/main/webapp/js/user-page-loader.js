@@ -63,8 +63,11 @@ function fetchMessages() {
         }
         unorderedList = createList();
         messages.forEach((message) => {
+          if(message.title != "marker_in_map") {
+            // Temporary solution: create card only if it is a listing and not a marker
           const messageDiv = buildMessageDiv(message); 
           unorderedList.appendChild(messageDiv);
+          }
         });
         messageCard = createCard(unorderedList);
         messagesContainer.appendChild(messageCard);
